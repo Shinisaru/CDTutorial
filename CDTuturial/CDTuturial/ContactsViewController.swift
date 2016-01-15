@@ -65,6 +65,13 @@ class ContactsViewController: UITableViewController {
         return cell
     }
     
+    private var cachedPerson: Person!
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        cachedPerson = contacts[indexPath.row] as! Person
+        performSegueWithIdentifier("EditPerson", sender: self)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -101,14 +108,17 @@ class ContactsViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "EditPerson" {
+            let destignation = segue.destinationViewController as! AddContactViewController
+            destignation.contextToUse = CoreDataStack.sharedInstance.createChildContext()
+            destignation.personToEdit = destignation.contextToUse!.objectWithID(cachedPerson.objectID) as? Person
+        }
     }
-    */
+    
 
 }

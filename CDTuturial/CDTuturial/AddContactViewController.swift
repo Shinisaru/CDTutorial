@@ -10,6 +10,9 @@ import UIKit
 import CoreData
 
 class AddContactViewController: UIViewController, UITextFieldDelegate {
+    
+    var contextToUse: NSManagedObjectContext?
+    var personToEdit: Person?
 
     @IBOutlet weak var firstNameInput: UITextField!
     @IBOutlet weak var lastNameInput: UITextField!
@@ -18,9 +21,26 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         title = "Add New Contact"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "saveChanges")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelEditing")
         
-        navigationItem.rightBarButtonItem?.enabled = false
+        if nil == personToEdit {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelEditing")
+        } else {
+            navigationItem.rightBarButtonItem?.enabled = false
+        }
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if nil == contextToUse {
+            contextToUse = CoreDataStack.sharedInstance.createChildContext()
+        }
+        
+        if let person = personToEdit {
+            firstNameInput.text = person.firstName
+            lastNameInput.text = person.lastName
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -51,14 +71,18 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         firstNameInput.resignFirstResponder()
         lastNameInput.resignFirstResponder()
         
-        let context = CoreDataStack.sharedInstance.createChildContext()
+        let person: Person
+
+        if nil != personToEdit {
+            person = personToEdit!
+        } else {
+            person = NSEntityDescription
+                .insertNewObjectForEntityForName("Person",
+                inManagedObjectContext: contextToUse!) as! Person
+        }
         
-        let newContact: Person = NSEntityDescription
-            .insertNewObjectForEntityForName("Person",
-                inManagedObjectContext: context) as! Person
-        
-        newContact.firstName = firstNameInput.text
-        newContact.lastName = lastNameInput.text
+        person.firstName = firstNameInput.text
+        person.lastName = lastNameInput.text
         
         firstNameInput.enabled = false
         lastNameInput.enabled = false
@@ -66,7 +90,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         navigationItem.leftBarButtonItem?.enabled = false
         navigationItem.rightBarButtonItem?.enabled = false
         
-        CoreDataStack.sharedInstance.saveContextAndPropagateChanges(context) {[weak self] error in
+        CoreDataStack.sharedInstance.saveContextAndPropagateChanges(contextToUse!) {[weak self] error in
             print("provideHotspotsWithCoordinate persisted error: \(error)")
             dispatch_async(dispatch_get_main_queue()) {
                 self?.handleErrorOrSucces(error)
@@ -84,10 +108,16 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         }
         
         guard let error = error else {
-            firstNameInput.text = ""
-            lastNameInput.text = ""
+            let message: String
+            if nil == personToEdit {
+                firstNameInput.text = ""
+                lastNameInput.text = ""
+                message = "Contact added!"
+            } else {
+                message = "Contact changed!"
+            }
             
-            let alert = UIAlertController(title: "Success", message: "Contact added!", preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Success", message: message, preferredStyle: .Alert)
             alert.addAction(defaultAction)
             presentViewController(alert, animated: true, completion:  nil)
             return

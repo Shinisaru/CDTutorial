@@ -66,6 +66,9 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="xCX-ed-sOQ"/>
                     <navigationItem key="navigationItem" id="H4F-gK-Jsb"/>
+                    <connections>
+                        <segue destination="LuD-Py-4qV" kind="show" identifier="EditPerson" id="AkT-IN-pAk"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="il9-4T-vCT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -240,4 +243,7 @@
         <image name="add" width="24" height="24"/>
         <image name="info" width="24" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="AkT-IN-pAk"/>
+    </inferredMetricsTieBreakers>
 </document>
