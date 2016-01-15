@@ -29,6 +29,8 @@ class ContactsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         let request = NSFetchRequest(entityName: "Person")
+        request.sortDescriptors = [NSSortDescriptor(key: "lastName", ascending: true)]
+        
         do {
             contacts = try CoreDataStack.sharedInstance.mainContext.executeFetchRequest(request)
             tableView.reloadData()
