@@ -15,6 +15,8 @@
 		6C9379B21C48C4C3003BF9EF /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9379B11C48C4C3003BF9EF /* ContactsViewController.swift */; };
 		6C9379B41C48C4D9003BF9EF /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9379B31C48C4D9003BF9EF /* AddContactViewController.swift */; };
 		6C9379B61C48C4E7003BF9EF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9379B51C48C4E7003BF9EF /* SettingsViewController.swift */; };
+		6CC487BB1C48D47E00606A06 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC487BA1C48D47E00606A06 /* CoreDataStack.swift */; };
+		6CC487BD1C48D74200606A06 /* CoreDataStack+LocalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC487BC1C48D74200606A06 /* CoreDataStack+LocalInstance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		6C9379B11C48C4C3003BF9EF /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		6C9379B31C48C4D9003BF9EF /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		6C9379B51C48C4E7003BF9EF /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		6CC487BA1C48D47E00606A06 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		6CC487BC1C48D74200606A06 /* CoreDataStack+LocalInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreDataStack+LocalInstance.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				6C9379B11C48C4C3003BF9EF /* ContactsViewController.swift */,
 				6C9379B31C48C4D9003BF9EF /* AddContactViewController.swift */,
 				6C9379B51C48C4E7003BF9EF /* SettingsViewController.swift */,
+				6CC487BA1C48D47E00606A06 /* CoreDataStack.swift */,
+				6CC487BC1C48D74200606A06 /* CoreDataStack+LocalInstance.swift */,
 			);
 			path = CDTuturial;
 			sourceTree = "<group>";
@@ -146,7 +152,9 @@
 			files = (
 				6C9379A51C48C1A7003BF9EF /* CDTuturial.xcdatamodeld in Sources */,
 				6C9379B41C48C4D9003BF9EF /* AddContactViewController.swift in Sources */,
+				6CC487BD1C48D74200606A06 /* CoreDataStack+LocalInstance.swift in Sources */,
 				6C9379B21C48C4C3003BF9EF /* ContactsViewController.swift in Sources */,
+				6CC487BB1C48D47E00606A06 /* CoreDataStack.swift in Sources */,
 				6C9379B61C48C4E7003BF9EF /* SettingsViewController.swift in Sources */,
 				6C93799D1C48C1A7003BF9EF /* AppDelegate.swift in Sources */,
 			);
@@ -296,6 +304,7 @@
 				6C9379B01C48C1A7003BF9EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
