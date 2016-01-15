@@ -19,13 +19,14 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add New Contact"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "saveChanges")
         
         if nil == personToEdit {
+            title = "Add New Contact"
+            navigationItem.rightBarButtonItem?.enabled = false
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelEditing")
         } else {
-            navigationItem.rightBarButtonItem?.enabled = false
+            title = "Edit Contact"
         }
         
     }
