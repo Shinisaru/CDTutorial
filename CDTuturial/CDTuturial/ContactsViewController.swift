@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactsViewController: UITableViewController {
     
@@ -23,28 +24,45 @@ class ContactsViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let request = NSFetchRequest(entityName: "Person")
+        do {
+            contacts = try CoreDataStack.sharedInstance.mainContext.executeFetchRequest(request)
+            tableView.reloadData()
+        } catch let error as NSError {
+            let alert = UIAlertController(title: "Error fetching objects", message: error.localizedDescription, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            presentViewController(alert, animated: true, completion: nil)
+            contacts.removeAll()
+        }
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return contacts.count
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("PersonCell", forIndexPath: indexPath)
 
-        // Configure the cell...
+        let person = contacts[indexPath.row] as! Person
+        
+        cell.textLabel?.text = person.lastName
+        cell.detailTextLabel?.text = person.firstName
+        
+        cell.accessoryType = .DisclosureIndicator
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
