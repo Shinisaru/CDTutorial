@@ -10,14 +10,20 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
 
+    private var selectedColor: String = "white"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        if let storedColor = NSUserDefaults.standardUserDefaults().stringForKey("StoredBackgroundColor") {
+            selectedColor = storedColor
+        } else {
+            NSUserDefaults.standardUserDefaults().setValue("white", forKey: "StoredBackgroundColor")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+        
+        view.backgroundColor = colorByName(selectedColor)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,68 +34,71 @@ class SettingsViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 5
+    }
+    
+    private func colorByName(colorName: String) -> UIColor {
+        if colorName == "white" {
+            return UIColor.whiteColor()
+        } else if colorName == "yellow" {
+            return UIColor.yellowColor()
+        } else if colorName == "red" {
+            return UIColor.redColor()
+        } else if colorName == "gray" {
+            return UIColor.lightGrayColor()
+        }  else {
+            return UIColor.orangeColor()
+        }
+    }
+    
+    private func colorTupleForIndexPath(indexPath: NSIndexPath) -> (String, UIColor) {
+        switch (indexPath.row) {
+        case 0:
+            return ("white", colorByName("white"))
+        case 1:
+            return ("gray", colorByName("gray"))
+        case 2:
+            return ("yellow", colorByName("yellow"))
+        case 3:
+            return ("orange", colorByName("orange"))
+        default:
+            return ("red", colorByName("red"))
+        }
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
-        // Configure the cell...
+        let (name, color) = colorTupleForIndexPath(indexPath)
+        
+        
+        cell.textLabel?.text = name.capitalizedString
+        cell.backgroundColor = color
+        
+        if selectedColor == color {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
 
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        
+        let (name, color) = colorTupleForIndexPath(indexPath)
+        
+        selectedColor = name
+        tableView.reloadData()
+        view.backgroundColor = color
+        
+        NSUserDefaults.standardUserDefaults().setValue(name, forKey: "StoredBackgroundColor")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
