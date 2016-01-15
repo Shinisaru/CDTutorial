@@ -92,7 +92,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         navigationItem.rightBarButtonItem?.enabled = false
         
         CoreDataStack.sharedInstance.saveContextAndPropagateChanges(contextToUse!) {[weak self] error in
-            print("provideHotspotsWithCoordinate persisted error: \(error)")
+            print("ssaved person, persisted with error: \(error)")
             dispatch_async(dispatch_get_main_queue()) {
                 self?.handleErrorOrSucces(error)
             }

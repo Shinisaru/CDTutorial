@@ -17,7 +17,7 @@ class ContactsViewController: UITableViewController {
         super.viewDidLoad()
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+         self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,7 +27,10 @@ class ContactsViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        reloadContacts()
+    }
+    
+    private func reloadContacts() {
         let request = NSFetchRequest(entityName: "Person")
         request.sortDescriptors = [NSSortDescriptor(key: "lastName", ascending: true)]
         
@@ -73,41 +76,44 @@ class ContactsViewController: UITableViewController {
         performSegueWithIdentifier("EditPerson", sender: self)
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
+   
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(
+        tableView: UITableView,
+        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+        forRowAtIndexPath indexPath: NSIndexPath)
+    {
         if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let person = contacts[indexPath.row] as! Person
+            
+            let context = CoreDataStack.sharedInstance.createChildContext()
+            let personInContext = context.objectWithID(person.objectID) as! Person
+            context.deleteObject(personInContext)
+            
+            CoreDataStack.sharedInstance.saveContextAndPropagateChanges(context) {[weak self] error in
+                print("deleted person, persisted with error: \(error)")
+                self?.handleDeletionError(error)
+            }
+            
+            contacts.removeAtIndex(indexPath.row)
+            
+            tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            tableView.endUpdates()
+        }
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+   
+    private func handleDeletionError(error: NSError?) {
+        guard let error = error else {
+            return
+        }
+        
+        let alert = UIAlertController(title: "Error deleting object", message: error.localizedDescription, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+        
+        reloadContacts()
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
