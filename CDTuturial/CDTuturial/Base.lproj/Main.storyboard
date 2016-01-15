@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -82,10 +83,64 @@
                     <view key="view" contentMode="scaleToFill" id="ie8-fo-vto">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cap-G0-VWF">
+                                <rect key="frame" x="20" y="103" width="133" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="XJm-jZ-14T"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gVi-IO-c3f">
+                                <rect key="frame" x="161" y="99" width="419" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="LuD-Py-4qV" id="DYi-cC-EZL"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19u-t5-AJn">
+                                <rect key="frame" x="20" y="161" width="133" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="giM-jQ-h3U"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oys-YP-0wl">
+                                <rect key="frame" x="161" y="157" width="419" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="LuD-Py-4qV" id="ylz-2a-FFu"/>
+                                </connections>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gVi-IO-c3f" firstAttribute="leading" secondItem="cap-G0-VWF" secondAttribute="trailing" constant="8" id="9iY-oE-HW2"/>
+                            <constraint firstItem="19u-t5-AJn" firstAttribute="top" secondItem="cap-G0-VWF" secondAttribute="bottom" constant="37" id="BbT-0s-ZOk"/>
+                            <constraint firstItem="cap-G0-VWF" firstAttribute="leading" secondItem="ie8-fo-vto" secondAttribute="leadingMargin" id="VX9-ER-9rt"/>
+                            <constraint firstItem="gVi-IO-c3f" firstAttribute="trailing" secondItem="ie8-fo-vto" secondAttribute="trailingMargin" id="WvD-Au-zlz"/>
+                            <constraint firstItem="Oys-YP-0wl" firstAttribute="trailing" secondItem="ie8-fo-vto" secondAttribute="trailingMargin" id="cb3-mK-p3w"/>
+                            <constraint firstItem="19u-t5-AJn" firstAttribute="top" secondItem="cap-G0-VWF" secondAttribute="bottom" constant="37" id="f0i-RS-u06"/>
+                            <constraint firstItem="cap-G0-VWF" firstAttribute="top" secondItem="PpV-6X-eSC" secondAttribute="bottom" constant="39" id="fW0-aD-Sfu"/>
+                            <constraint firstItem="gVi-IO-c3f" firstAttribute="leading" secondItem="cap-G0-VWF" secondAttribute="trailing" constant="8" id="hnz-IS-fQy"/>
+                            <constraint firstItem="Oys-YP-0wl" firstAttribute="leading" secondItem="19u-t5-AJn" secondAttribute="trailing" constant="8" id="nJg-hm-mU4"/>
+                            <constraint firstItem="Oys-YP-0wl" firstAttribute="top" secondItem="gVi-IO-c3f" secondAttribute="bottom" constant="28" id="nQB-Mj-3cY"/>
+                            <constraint firstItem="gVi-IO-c3f" firstAttribute="top" secondItem="PpV-6X-eSC" secondAttribute="bottom" constant="35" id="qFe-xI-Iov"/>
+                            <constraint firstItem="19u-t5-AJn" firstAttribute="leading" secondItem="ie8-fo-vto" secondAttribute="leadingMargin" id="qQL-OR-R9d"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Contact" image="add" id="k3l-uI-VFD"/>
                     <navigationItem key="navigationItem" id="Ys3-8o-NiS"/>
+                    <connections>
+                        <outlet property="firstNameInput" destination="gVi-IO-c3f" id="6n0-zX-HSv"/>
+                        <outlet property="lastNameInput" destination="Oys-YP-0wl" id="Vl3-wz-12c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zgC-h1-mst" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
